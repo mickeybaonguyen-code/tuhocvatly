@@ -1,0 +1,234 @@
+/* Cài đặt chung */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8; /* Màu nền xám nhạt */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --------------------------------- */
+/* ---- TRANG MỞ ĐẦU (index.html) ---- */
+/* --------------------------------- */
+.landing-container {
+    text-align: center;
+    background: linear-gradient(135deg, #003366, #0055a4); /* Nền xanh đậm vật lí/không gian */
+    color: white;
+    padding: 60px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 700px;
+}
+
+.landing-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.landing-container h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.landing-container p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.start-button {
+    display: inline-block;
+    background-color: #ff6b6b; /* Màu đỏ cam nổi bật */
+    color: white;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.start-button:hover {
+    background-color: #ff4757;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* Biểu tượng vật lí đơn giản */
+.icon-physics {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+}
+.nucleus {
+    width: 20px;
+    height: 20px;
+    background: #ffc107;
+    border-radius: 50%;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+.electron {
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 45px;
+    left: 45px;
+    animation: orbit 2s linear infinite;
+}
+.electron.e1 {
+    animation-duration: 2s;
+}
+.electron.e2 {
+    animation-name: orbit-2;
+    animation-duration: 1.5s;
+}
+.electron.e3 {
+    animation-name: orbit-3;
+    animation-duration: 3s;
+}
+
+@keyframes orbit {
+    from { transform: rotate(0) translateX(45px) rotate(0); }
+    to   { transform: rotate(360deg) translateX(45px) rotate(-360deg); }
+}
+@keyframes orbit-2 {
+    from { transform: rotate(0) translateY(40px) rotate(0) skew(15deg); }
+    to   { transform: rotate(360deg) translateY(40px) rotate(-360deg) skew(15deg); }
+}
+@keyframes orbit-3 {
+    from { transform: rotate(0) translateX(30px) rotate(0) skew(-15deg); }
+    to   { transform: rotate(360deg) translateX(30px) rotate(-360deg) skew(-15deg); }
+}
+
+
+/* --------------------------------- */
+/* ---- TRANG CHAT (chat.html) ---- */
+/* --------------------------------- */
+.chat-container {
+    width: 95%;
+    max-width: 600px;
+    height: 80vh;
+    max-height: 700px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: #004a99; /* Màu xanh đậm học đường */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+.chat-header p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.chat-window {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Định dạng bong bóng chat */
+.message {
+    max-width: 80%;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    line-height: 1.5;
+}
+
+.message p {
+    margin: 0;
+}
+
+/* Tin nhắn của Bot */
+.message.bot {
+    background-color: #e9ecef; /* Màu xám nhạt */
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+/* Tin nhắn của Người dùng */
+.message.user {
+    background-color: #007bff; /* Màu xanh dương chính */
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+/* Tin nhắn bot đang tải */
+.message.bot.loading p {
+    font-style: italic;
+    color: #555;
+    animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+
+.input-area {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+#user-input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#user-input:focus {
+    border-color: #007bff;
+}
+
+#send-btn {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#send-btn:hover {
+    background-color: #0056b3;
+}
