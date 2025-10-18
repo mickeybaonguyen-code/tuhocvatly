@@ -139,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessageToWindow(message, sender) {
         const messageWrapper = document.createElement('div');
         messageWrapper.classList.add('message', ...sender.split(' '));
-
         const messageParagraph = document.createElement('p');
         messageParagraph.textContent = message; // Dùng textContent để tránh lỗi XSS
 
@@ -153,3 +152,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
