@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Code này chỉ chạy ở phía client (trình duyệt), dễ bị lộ key.
     // Với dự án thật, bạn nên tạo một server (backend) để giấu key này.
     const API_KEY = "AIzaSyBGFjNJNv5zxFQ_3ttbGKW8xzHkfEz03qI"; 
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
-
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
     // =================================================================
     // ==== VIỆC CẦN LÀM 2: DÁN NỘI DUNG SÁCH GIÁO KHOA VÀO ĐÂY ====
     // =================================================================
@@ -152,5 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
