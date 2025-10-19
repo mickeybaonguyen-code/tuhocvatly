@@ -96,41 +96,43 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Hàm gọi API của Google Gemini (hoặc AI khác)
      */
-    async function callChatbotAPI(promptText) {
-        const payload = {
-            contents: [
-                {
-                    parts: [
-                        { text: promptText }
-                    ]
-                }
-            ],
-            // Có thể thêm các cài đặt an toàn (safetySettings) tại đây nếu cần
-        };
+    // File: script.js (Đây là Frontend - Chạy trên trình duyệt)
 
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
+/**
+ * Hàm gọi API của Google Gemini (HOẶC AI KHÁC)
+ */
+async function callChatbotAPI(promptText) {
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    // 1. Gửi "prompt" đến backend của chúng ta tại địa chỉ "/chat"
+    // Cloudflare sẽ tự động hiểu "/chat" là file "/functions/chat.js"
+    const response = await fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // Gửi đi "siêu prompt" (đã bao gồm ngữ liệu)
+        body: JSON.stringify({ prompt: promptText }) 
+    });
 
-        const data = await response.json();
-
-        // Trích xuất văn bản trả lời từ cấu trúc JSON của Gemini
-        // Kiểm tra kỹ cấu trúc response nếu bạn dùng API khác
-        try {
-            return data.candidates[0].content.parts[0].text;
-        } catch (e) {
-            console.error("Lỗi trích xuất dữ liệu:", data);
-            throw new Error("Không thể phân tích phản hồi từ AI.");
-        }
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Lỗi từ backend Cloudflare:", errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    // 2. Nhận kết quả từ backend
+    const data = await response.json();
+
+    // 3. Trích xuất văn bản trả lời
+    // Mô hình Llama 3 trả về kết quả trong { response: "..." }
+    // Khác với Gemini là data.candidates[0]...
+    try {
+        return data.response; 
+    } catch (e) {
+        console.error("Lỗi trích xuất dữ liệu:", data);
+        throw new Error("Không thể phân tích phản hồi từ AI.");
+    }
+}
 
     /**
      * Hàm thêm tin nhắn vào cửa sổ chat
@@ -151,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
 
