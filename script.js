@@ -105,7 +105,7 @@ async function callChatbotAPI(promptText) {
 
     // 1. Gửi "prompt" đến backend của chúng ta tại địa chỉ "/chat"
     // Cloudflare sẽ tự động hiểu "/chat" là file "/functions/chat.js"
-    const response = await fetch('/chat', {
+    const response = await fetch('/api', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -153,6 +153,7 @@ async function callChatbotAPI(promptText) {
     }
 
 });
+
 
 
 
