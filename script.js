@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput.value = ''; // Xóa nội dung trong ô input
 
         // 2. Hiển thị trạng thái "đang tải"
-        const loadingMessage = addMessageToWindow("Bot đang suy nghĩ...", 'botloading');
+        const loadingMessage = addMessageToWindow("Bot đang suy nghĩ...", 'bot loading');
 
         // 3. Xây dựng prompt cuối cùng gửi đến AI
         const finalPrompt = buildFinalPrompt(userQuestion);
@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
 
