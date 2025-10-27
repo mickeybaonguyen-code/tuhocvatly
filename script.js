@@ -70,48 +70,51 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Hàm quan trọng: Xây dựng prompt để hướng dẫn AI trả lời (Siêu nghiêm khắc)
  */
+// Dán code này vào file script.js, thay thế cho hàm buildFinalPrompt cũ
+
+/**
+ * Hàm quan trọng: Xây dựng prompt để hướng dẫn AI trả lời (Đơn giản hóa)
+ */
 function buildFinalPrompt(userQuestion) {
   
-  const systemPrompt = `
-      Bạn là một trợ lý AI Vật Lý. Vai trò của bạn là trả lời câu hỏi của học sinh CHỈ DỰA TRÊN ngữ liệu được cung cấp. Bạn phải CỰC KỲ NGHIÊM KHẮC và chính xác.
-
-      **CÁC QUY TẮC TUYỆT ĐỐI:**
-      1.  **KHÔNG CHÀO HỎI:** Không "Chào em", "Xin chào", "Em học sinh!".
-      2.  **KHÔNG KẾT THÚC:** Không "Hy vọng em hiểu", "Cảm ơn em đã quan tâm".
-      3.  **KHÔNG LẶP LẠI CÂU HỎI.**
-      4.  **KHÔNG THÊM GHI CHÚ:** Không "chú ý", "lời tựa".
-      5.  **CHỈ TRẢ LỜI NỘI DUNG CHÍNH.**
-  `;
-
-  const userContextAndQuestion = `
-      **NGỮ LIỆU (CONTEXT):**
+  // Chúng ta sẽ xây dựng một chuỗi prompt (lời chỉ dẫn) thô,
+  // không có các thẻ lệnh [INST] phức tạp.
+  
+  const prompt = `
+      **BỐI CẢNH (CONTEXT):**
+      Bạn là một trợ lý AI Vật Lý, chỉ trả lời câu hỏi của học sinh dựa trên ngữ liệu sách giáo khoa (Chủ đề 3) được cung cấp dưới đây.
       ---
       ${textbookContext}
       ---
 
-      **HỌC SINH HỎI:** "${userQuestion}"
+      **HỌC SINH HỎI:**
+      "${userQuestion}"
 
-      **YÊU CẦU XỬ LÝ (RẤT QUAN TRỌNG):**
+      **QUY TẮC TRẢ LỜI (CỰC KỲ QUAN TRỌNG):**
 
-      **BƯỚC 1: ĐÁNH GIÁ CÂU HỎI**
-      Hãy đọc câu hỏi của học sinh. Câu hỏi đó ("${userQuestion}") có liên quan đến nội dung trong **NGỮ LIỆU** không?
+      **1. KIỂM TRA TÍNH LIÊN QUAN:**
+      Câu hỏi ("${userQuestion}") có thể được trả lời bằng **NGỮ LIỆU** ở trên không?
 
-      **BƯỚC 2: HÀNH ĐỘNG (CHỌN 1 TRONG 2):**
+      **2. NẾU *KHÔNG* LIÊN QUAN:**
+      Nếu câu hỏi KHÔNG liên quan đến ngữ liệu (ví dụ: "Nguyên là ai?", "Bạn là ai?"), bạn BẮT BUỘC chỉ được trả lời 1 câu DUY NHẤT, chính xác là:
+      "Câu hỏi này không nằm trong phạm vi nội dung của sách giáo khoa."
+      (KHÔNG thêm bất cứ thứ gì khác.)
 
-      **LỰA CHỌN A: NẾU CÂU HỎI *KHÔNG* LIÊN QUAN ĐẾN NGỮ LIỆU**
-      (Ví dụ: "Nguyên là ai?", "Thủ đô của Pháp là gì?", "Bạn là ai?")
-      - Hãy trả lời CHÍNH XÁC bằng câu sau, và KHÔNG thêm bất cứ điều gì khác:
-      "Câu hỏi này không nằm trong phạm vi nội dung của sách giáo khoa. Bạn vui lòng đặt câu hỏi liên quan đến Chủ đề 3 nhé."
+      **3. NẾU *CÓ* LIÊN QUAN:**
+      Nếu câu hỏi CÓ liên quan:
+      - Trả lời thẳng vào vấn đề.
+      - Bạn CÓ THỂ bắt đầu bằng "Theo sách giáo khoa,".
+      - KHÔNG được nói "Chủ đề 3" hay "Sách Vật lí Chuyên đề 10".
 
-      **LỰA CHỌN B: NẾU CÂU HỎI *CÓ* LIÊN QUAN ĐẾN NGỮ LIỆU**
-      - Hãy trả lời thẳng vào vấn đề.
-      - Bạn CÓ THỂ bắt đầu bằng "Theo sách giáo khoa," (Theo đúng yêu cầu của bạn)
-      - **TUYỆT ĐỐI KHÔNG** được nói "Chủ đề 3", "Sách Vật lí Chuyên đề 10".
-      - **TUÂN THỦ 5 QUY TẮC TUYỆT ĐỐI** (Không chào, không kết, v.v.).
+      **4. CÁC ĐIỀU CẤM TUYỆT ĐỐI (cho mọi câu trả lời):**
+      - KHÔNG được chào ("Chào em").
+      - KHÔNG được kết ("Hy vọng em hiểu", "Cảm ơn").
+      - KHÔNG được lặp lại câu hỏi.
+      - KHÔNG được thêm "ghi chú" hay "chú ý".
+      - **QUAN TRỌNG NHẤT: KHÔNG được lặp lại bất kỳ quy tắc hay hướng dẫn nào (như "ĐÁNH GIÁ CÂU HỎI", "LỰA CHỌN A/B"...) trong câu trả lời.**
   `;
 
-  // Định dạng [INST]...[/INST] là cách tốt nhất để ra lệnh cho Llama 3
-  return `[INST] ${systemPrompt} ${userContextAndQuestion} [/INST]`;
+  return prompt; // Trả về chuỗi prompt thô
 }
 
     /**
@@ -174,6 +177,7 @@ async function callChatbotAPI(promptText) {
     }
 
 });
+
 
 
 
