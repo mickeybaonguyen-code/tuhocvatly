@@ -1,21 +1,51 @@
-/* Cài đặt chung */
+/*
+====================================
+ CÀI ĐẶT CHUNG & NỀN SỐNG ĐỘNG
+====================================
+*/
+
+/* Keyframes cho hiệu ứng nền chuyển động */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8; /* Màu nền xám nhạt */
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+
+    /* * NỀN SỐNG ĐỘNG (MỚI)
+     * Đây là một gradient (chuyển màu) lớn hơn 4 lần
+     * và được làm chuyển động (animation)
+     */
+    background: linear-gradient(-45deg, #0a192f, #003366, #3b3a6d, #1f1c2c);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    color: white; /* Đổi màu chữ mặc định sang trắng để hợp nền tối */
 }
 
-/* --------------------------------- */
-/* ---- TRANG MỞ ĐẦU (index.html) ---- */
-/* --------------------------------- */
+/*
+====================================
+ TRANG MỞ ĐẦU (index.html)
+====================================
+*/
 .landing-container {
     text-align: center;
-    background: linear-gradient(135deg, #003366, #0055a4); /* Nền xanh đậm vật lí/không gian */
-    color: white;
+    
+    /* * HIỆU ỨNG KÍNH MỜ (MỚI)
+     * Làm cho khung nền hơi trong suốt và mờ đi
+     */
+    background-color: rgba(255, 255, 255, 0.1); /* Hơi trong suốt */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Hỗ trợ trình duyệt Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Viền mờ */
+    /* --- Hết hiệu ứng kính mờ --- */
+    
     padding: 60px 30px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -41,6 +71,22 @@ body {
     margin-bottom: 40px;
 }
 
+/* Keyframes cho hiệu ứng "thở" của nút */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4);
+    }
+    70% {
+        transform: scale(1.03);
+        box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+    }
+}
+
 .start-button {
     display: inline-block;
     background-color: #ff6b6b; /* Màu đỏ cam nổi bật */
@@ -51,12 +97,16 @@ body {
     text-decoration: none;
     border-radius: 30px;
     transition: all 0.3s ease;
+    
+    /* Hiệu ứng "thở" (MỚI) */
+    animation: pulse 2s infinite;
 }
 
 .start-button:hover {
     background-color: #ff4757;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    animation: none; /* Tắt hiệu ứng thở khi hover */
 }
 
 /* Biểu tượng vật lí đơn giản */
@@ -85,17 +135,9 @@ body {
     left: 45px;
     animation: orbit 2s linear infinite;
 }
-.electron.e1 {
-    animation-duration: 2s;
-}
-.electron.e2 {
-    animation-name: orbit-2;
-    animation-duration: 1.5s;
-}
-.electron.e3 {
-    animation-name: orbit-3;
-    animation-duration: 3s;
-}
+.electron.e1 { animation-duration: 2s; }
+.electron.e2 { animation-name: orbit-2; animation-duration: 1.5s; }
+.electron.e3 { animation-name: orbit-3; animation-duration: 3s; }
 
 @keyframes orbit {
     from { transform: rotate(0) translateX(45px) rotate(0); }
@@ -111,24 +153,39 @@ body {
 }
 
 
-/* --------------------------------- */
-/* ---- TRANG CHAT (chat.html) ---- */
-/* --------------------------------- */
+/*
+====================================
+ TRANG CHAT (chat.html)
+====================================
+*/
 .chat-container {
     width: 95%;
     max-width: 600px;
     height: 80vh;
     max-height: 700px;
-    background: #ffffff;
+    
+    /* * HIỆU ỨNG KÍNH MỜ (MỚI)
+     * Áp dụng hiệu ứng kính mờ cho cả khung chat
+     */
+    background: rgba(255, 255, 255, 0.9); /* Màu trắng hơi trong suốt */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* --- Hết hiệu ứng kính mờ --- */
+    
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: hidden; /* Quan trọng để giữ bo góc */
 }
 
 .chat-header {
-    background: #004a99; /* Màu xanh đậm học đường */
+    /* Nền gradient bán trong suốt (MỚI) */
+    background: linear-gradient(135deg, rgba(0, 74, 153, 0.8), rgba(0, 123, 255, 0.8));
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    
     color: white;
     padding: 15px 20px;
     text-align: center;
@@ -145,13 +202,31 @@ body {
     opacity: 0.9;
 }
 
+/* Cửa sổ chat và thanh cuộn tùy chỉnh (MỚI) */
 .chat-window {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    /* Làm cho màu chữ của chat tối hơn để đọc trên nền trắng mờ */
+    color: #333;
 }
+
+/* Thanh cuộn (scrollbar) tùy chỉnh cho đẹp hơn (MỚI) */
+.chat-window::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chat-window::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 20px;
+    border: 3px solid transparent;
+}
+/* Hết thanh cuộn */
+
 
 /* Định dạng bong bóng chat */
 .message {
@@ -166,17 +241,17 @@ body {
     margin: 0;
 }
 
-/* Tin nhắn của Bot */
+/* Tin nhắn của Bot (sáng hơn) */
 .message.bot {
-    background-color: #e9ecef; /* Màu xám nhạt */
-    color: #333;
+    background-color: #f1f3f5; /* Màu xám nhạt hơn */
+    color: #212529; /* Màu chữ tối hơn */
     align-self: flex-start;
     border-bottom-left-radius: 4px;
 }
 
-/* Tin nhắn của Người dùng */
+/* Tin nhắn của Người dùng (đổi sang gradient) (MỚI) */
 .message.user {
-    background-color: #007bff; /* Màu xanh dương chính */
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: white;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
@@ -200,7 +275,11 @@ body {
     display: flex;
     padding: 15px;
     border-top: 1px solid #ddd;
-    background: #f9f9f9;
+    
+    /* Nền hơi trong suốt (MỚI) */
+    background: rgba(249, 249, 249, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 #user-input {
@@ -211,10 +290,13 @@ body {
     font-size: 1rem;
     outline: none;
     transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.7); /* Hơi trong suốt */
+    color: #333;
 }
 
 #user-input:focus {
     border-color: #007bff;
+    background: rgba(255, 255, 255, 1);
 }
 
 #send-btn {
