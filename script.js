@@ -80,28 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Hàm quan trọng: Xây dựng prompt để hướng dẫn AI trả lời (Siêu nghiêm khắc V4)
  */
-Chào bạn! Đã hiểu. Chúng ta sẽ "ra lệnh" cho AI một cách tuyệt đối là chỉ dùng tiếng Việt, bất kể người dùng hỏi bằng ngôn ngữ nào.
-
-Điều này sẽ ngăn chặn hoàn toàn việc AI tự ý trả lời bằng tiếng Anh như lỗi trước.
-
-Cách Khắc phục
-Bạn hãy cập nhật lại hàm buildFinalPrompt trong tệp script.js của bạn trên GitHub.
-
-Mở kho chứa (repository) GitHub của bạn.
-
-Mở tệp script.js.
-
-Tìm hàm buildFinalPrompt (khoảng dòng 76).
-
-Xóa toàn bộ hàm buildFinalPrompt cũ và thay thế bằng hàm mới (V5) dưới đây:
-
-JavaScript
-
-// Dán code này vào file script.js, thay thế cho hàm buildFinalPrompt cũ
-
-/**
- * Hàm quan trọng: Xây dựng prompt để hướng dẫn AI trả lời (Siêu nghiêm khắc V5)
- */
 function buildFinalPrompt(userQuestion) {
   
   const prompt = `
@@ -116,26 +94,26 @@ function buildFinalPrompt(userQuestion) {
 
       **QUY TẮC TRẢ LỜI (CỰC KỲ QUAN TRỌNG):**
 
-      **1. NGÔN NGỮ BẮT BUỘC:**
-      - **Bạn CHỈ ĐƯỢC PHÉP trả lời bằng TIẾNG VIỆT.**
-      - Tuyệt đối không được trả lời bằng tiếng Anh hay bất kỳ ngôn ngữ nào khác, ngay cả khi học sinh hỏi bằng ngôn ngữ đó.
+      **1. NGÔN NGỮ:**
+      - **Bạn PHẢI trả lời bằng ngôn ngữ Tiếng Việt.** 
+      - KHÔNG được tự động dịch sang ngôn ngữ khác.
 
       **2. KIỂM TRA TÍNH LIÊN QUAN:**
       - Câu hỏi ("${userQuestion}") có thể được trả lời bằng **NGỮ LIỆU** ở trên không?
 
       **3. NẾU *KHÔNG* LIÊN QUAN:**
-      - Nếu câu hỏi KHÔNG liên quan đến ngữ liệu (ví dụ: "Nguyên là ai?", "What is love?", "Bạn là ai?"), bạn BẮT BUỘC chỉ được trả lời 1 câu DUY NHẤT bằng TIẾNG VIỆT:
+      - Nếu câu hỏi KHÔNG liên quan đến ngữ liệu (ví dụ: "Nguyên là ai?", "Gái là gì?", "Bạn là ai?"), bạn BẮT BUỘC chỉ được trả lời 1 câu DUY NHẤT, chính xác là:
       "Câu hỏi này không nằm trong phạm vi nội dung của sách giáo khoa."
-      (KHÔNG thêm bất cứ thứ gì khác. KHÔNG được giải thích thêm.)
+      (KHÔNG thêm bất cứ thứ gì khác. KHÔNG được giải thích thêm bằng tiếng Anh.)
 
       **4. NẾU *CÓ* LIÊN QUAN:**
       - Nếu câu hỏi CÓ liên quan:
-      - Trả lời thẳng vào vấn đề (bằng tiếng Việt).
+      - Trả lời thẳng vào vấn đề.
       - Bạn CÓ THỂ bắt đầu bằng "Theo sách giáo khoa,".
       - KHÔNG được nói "Chủ đề 3" hay "Sách Vật lí Chuyên đề 10".
 
       **5. CÁC ĐIỀU CẤM TUYỆT ĐỐI (cho mọi câu trả lời):**
-      - KHÔNG được bắt đầu bằng "**TRỢ LÝ AI**" hay bất kỳ tiền tố nào.
+      - **KHÔNG được bắt đầu bằng "**TRỢ LÝ AI**" hay bất kỳ tiền tố nào.**
       - KHÔNG được chào ("Chào em").
       - KHÔNG được kết ("Hy vọng em hiểu", "Cảm ơn").
       - KHÔNG được lặp lại câu hỏi.
@@ -143,8 +121,6 @@ function buildFinalPrompt(userQuestion) {
       - KHÔNG được lặp lại bất kỳ quy tắc hay hướng dẫn nào.
   `;
 
-  return prompt; // Trả về chuỗi prompt thô
-}
   return prompt; // Trả về chuỗi prompt thô
 }
     /**
@@ -207,6 +183,8 @@ async function callChatbotAPI(promptText) {
     }
 
 });
+
+
 
 
 
